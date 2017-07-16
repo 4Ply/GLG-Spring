@@ -36,10 +36,10 @@ import java.sql.SQLException;
 
 @Configuration
 public class AppConfig {
-    @Value("${key.database.mysql.ip}")
+    @Value("${mysql_host}")
     private String mysqlIp;
 
-    @Value("${key.database.mysql.port}")
+    @Value("${mysql_port}")
     private int mysqlPort;
 
     @Value("${mysql_db}")
