@@ -25,15 +25,16 @@ public class GymnastController {
             @RequestParam(value = "firstName") String firstName,
             @RequestParam(value = "surname") String surname,
             @RequestParam(value = "identificationNumber") String identificationNumber,
-            @RequestParam(value = "dateOfBirth") String dateOfBirth) {
-        gymnastManager.addGymnast(firstName, surname, identificationNumber, dateOfBirth);
+            @RequestParam(value = "dateOfBirth") String dateOfBirth,
+            @RequestParam(value = "gender") String gender) {
+        gymnastManager.addGymnast(firstName, surname, identificationNumber, dateOfBirth, gender);
     }
 
     @RequestMapping(value = "/gymnast", consumes = "application/json", produces = "application/json", method = RequestMethod.POST)
     public void editGymnast(
             @RequestParam(value = "id") Integer id,
             @RequestBody BasicGymnast gymnast) {
-        gymnastManager.editGymnast(id, gymnast.getFirstName(), gymnast.getSurname(), gymnast.getIdentificationNumber(), gymnast.getDateOfBirth());
+        gymnastManager.editGymnast(id, gymnast.getFirstName(), gymnast.getSurname(), gymnast.getIdentificationNumber(), gymnast.getDateOfBirth(), gymnast.getGender());
     }
 
     @RequestMapping(value = "/gymnast", produces = "application/json", method = RequestMethod.GET)
@@ -53,7 +54,7 @@ public class GymnastController {
     public void editGymnastAdditional(
             @RequestParam(value = "id") Integer id,
             @RequestBody GymnastAdditional gymnastAdditional) {
-        gymnastManager.editGymnastAdditional(id, gymnastAdditional.getMiddleName(), gymnastAdditional.getPreferredName(), gymnastAdditional.getCategory());
+        gymnastManager.editGymnastAdditional(id, gymnastAdditional.getMiddleName(), gymnastAdditional.getPreferredName(), gymnastAdditional.getCategory(), gymnastAdditional.getSagfNumber());
     }
 
     @RequestMapping(value = "/gymnast_additional", produces = "application/json", method = RequestMethod.GET)

@@ -23,7 +23,7 @@ public class OutstandingFeesDatabaseImpl extends BaseDatabase implements Outstan
             List<BasicGymnast> gymnasts = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                gymnasts.add(new BasicGymnast(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("surname"), resultSet.getString("identification_number"), resultSet.getString("date_of_birth")));
+                gymnasts.add(new BasicGymnast(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("surname"), resultSet.getString("identification_number"), resultSet.getString("date_of_birth"), resultSet.getString("gender")));
             }
             return gymnasts;
         } catch (SQLException e) {

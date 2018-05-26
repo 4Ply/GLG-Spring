@@ -6,17 +6,19 @@ public class BasicGymnast {
     private String surname;
     private String identificationNumber;
     private String dateOfBirth;
+    private String gender;
 
 
     public BasicGymnast() {
     }
 
-    public BasicGymnast(int id, String firstName, String surname, String identificationNumber, String dateOfBirth) {
+    public BasicGymnast(int id, String firstName, String surname, String identificationNumber, String dateOfBirth, String gender) {
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
         this.identificationNumber = identificationNumber;
         this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -37,5 +39,9 @@ public class BasicGymnast {
 
     public String getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
     }
 }

@@ -20,13 +20,13 @@ public class GymnastManagerImpl implements GymnastManager {
     }
 
     @Override
-    public void addGymnast(String firstName, String surname, String identificationNumber, String dateOfBirth) {
-        gymnastDatabase.addGymnast(firstName, surname, identificationNumber, dateOfBirth);
+    public void addGymnast(String firstName, String surname, String identificationNumber, String dateOfBirth, String gender) {
+        gymnastDatabase.addGymnast(firstName, surname, identificationNumber, dateOfBirth, gender);
     }
 
     @Override
-    public void editGymnast(int id, String firstName, String surname, String identificationNumber, String dateOfBirth) {
-        gymnastDatabase.editGymnast(id, firstName, surname, identificationNumber, dateOfBirth);
+    public void editGymnast(int id, String firstName, String surname, String identificationNumber, String dateOfBirth, String gender) {
+        gymnastDatabase.editGymnast(id, firstName, surname, identificationNumber, dateOfBirth, gender);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class GymnastManagerImpl implements GymnastManager {
     }
 
     @Override
-    public void editGymnastAdditional(int id, String middleName, String preferredName, String category) {
-        gymnastDatabase.editGymnastAdditional(id, middleName, preferredName, category);
+    public void editGymnastAdditional(int id, String middleName, String preferredName, String category, String sagfNumber) {
+        gymnastDatabase.editGymnastAdditional(id, middleName, preferredName, category, sagfNumber);
     }
 
     @Override

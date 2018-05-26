@@ -17,13 +17,14 @@ public class GymnastDatabaseImpl extends BaseDatabase implements GymnastDatabase
     }
 
     @Override
-    public void addGymnast(String firstName, String surname, String identificationNumber, String dateOfBirth) {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Gymnasts (id, first_name, surname, identification_number, date_of_birth) VALUES (NULL, ?, ?, ?, ?)")) {
+    public void addGymnast(String firstName, String surname, String identificationNumber, String dateOfBirth, String gender) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Gymnasts (id, first_name, surname, identification_number, date_of_birth, gender) VALUES (NULL, ?, ?, ?, ?, ?)")) {
             int i = 0;
             preparedStatement.setString(++i, firstName);
             preparedStatement.setString(++i, surname);
             preparedStatement.setString(++i, identificationNumber);
             preparedStatement.setString(++i, dateOfBirth);
+            preparedStatement.setString(++i, gender);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -32,18 +33,21 @@ public class GymnastDatabaseImpl extends BaseDatabase implements GymnastDatabase
     }
 
     @Override
-    public void editGymnast(int id, String firstName, String surname, String identificationNumber, String dateOfBirth) {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Gymnasts (id, first_name, surname, identification_number, date_of_birth) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE first_name = ?, surname = ?, identification_number = ?, date_of_birth = ?")) {
+    public void editGymnast(int id, String firstName, String surname, String identificationNumber, String dateOfBirth, String gender) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Gymnasts (id, first_name, surname, identification_number, date_of_birth, gender) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE first_name = ?, surname = ?, identification_number = ?, date_of_birth = ?, gender = ?")) {
             int i = 0;
             preparedStatement.setInt(++i, id);
             preparedStatement.setString(++i, firstName);
             preparedStatement.setString(++i, surname);
             preparedStatement.setString(++i, identificationNumber);
             preparedStatement.setString(++i, dateOfBirth);
+            preparedStatement.setString(++i, gender);
+
             preparedStatement.setString(++i, firstName);
             preparedStatement.setString(++i, surname);
             preparedStatement.setString(++i, identificationNumber);
             preparedStatement.setString(++i, dateOfBirth);
+            preparedStatement.setString(++i, gender);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -53,11 +57,11 @@ public class GymnastDatabaseImpl extends BaseDatabase implements GymnastDatabase
 
     @Override
     public BasicGymnast getGymnast(int id) {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT id, first_name, surname, identification_number, date_of_birth FROM Gymnasts WHERE id = ? LIMIT 1")) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT id, first_name, surname, identification_number, date_of_birth, gender FROM Gymnasts WHERE id = ? LIMIT 1")) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new BasicGymnast(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("surname"), resultSet.getString("identification_number"), resultSet.getString("date_of_birth"));
+                return new BasicGymnast(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("surname"), resultSet.getString("identification_number"), resultSet.getString("date_of_birth"), resultSet.getString("gender"));
             }
             return null;
         } catch (SQLException e) {
@@ -68,11 +72,11 @@ public class GymnastDatabaseImpl extends BaseDatabase implements GymnastDatabase
 
     @Override
     public List<BasicGymnast> getGymnasts() {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT id, first_name, surname, identification_number, date_of_birth FROM Gymnasts")) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT id, first_name, surname, identification_number, date_of_birth, gender FROM Gymnasts")) {
             List<BasicGymnast> gymnasts = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                gymnasts.add(new BasicGymnast(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("surname"), resultSet.getString("identification_number"), resultSet.getString("date_of_birth")));
+                gymnasts.add(new BasicGymnast(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("surname"), resultSet.getString("identification_number"), resultSet.getString("date_of_birth"), resultSet.getString("gender")));
             }
             return gymnasts;
         } catch (SQLException e) {
@@ -82,17 +86,19 @@ public class GymnastDatabaseImpl extends BaseDatabase implements GymnastDatabase
     }
 
     @Override
-    public void editGymnastAdditional(int id, String middleName, String preferredName, String category) {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Gymnasts_Additional (gymnast_id, middle_name, preferred_name, category) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE middle_name = ?, preferred_name = ?, category = ?")) {
+    public void editGymnastAdditional(int id, String middleName, String preferredName, String category, String sagfNumber) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Gymnasts_Additional (gymnast_id, middle_name, preferred_name, category, sagf_number) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE middle_name = ?, preferred_name = ?, category = ?, sagf_number = ?")) {
             int i = 0;
             preparedStatement.setInt(++i, id);
             preparedStatement.setString(++i, middleName);
             preparedStatement.setString(++i, preferredName);
             preparedStatement.setString(++i, category);
+            preparedStatement.setString(++i, sagfNumber);
 
             preparedStatement.setString(++i, middleName);
             preparedStatement.setString(++i, preferredName);
             preparedStatement.setString(++i, category);
+            preparedStatement.setString(++i, sagfNumber);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -102,11 +108,11 @@ public class GymnastDatabaseImpl extends BaseDatabase implements GymnastDatabase
 
     @Override
     public GymnastAdditional getGymnastAdditional(int id) {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT middle_name, preferred_name, category FROM Gymnasts_Additional WHERE gymnast_id = ? LIMIT 1")) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT middle_name, preferred_name, category, sagf_number FROM Gymnasts_Additional WHERE gymnast_id = ? LIMIT 1")) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new GymnastAdditional(resultSet.getString("middle_name"), resultSet.getString("preferred_name"), resultSet.getString("category"));
+                return new GymnastAdditional(resultSet.getString("middle_name"), resultSet.getString("preferred_name"), resultSet.getString("category"), resultSet.getString("sagf_number"));
             }
             return null;
         } catch (SQLException e) {
