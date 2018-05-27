@@ -3,6 +3,8 @@ package com.netply.glc.web.rest.persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BaseDatabase {
     private Connection connection;
@@ -19,6 +21,8 @@ public class BaseDatabase {
         this.mysqlDb = mysqlDb;
         this.mysqlUser = mysqlUser;
         this.mysqlPassword = mysqlPassword;
+
+        Logger.getGlobal().log(Level.INFO, "Connecting to MySQL DB: " + mysqlUser + "@" + mysqlIp + ":" + mysqlPort + "/" + mysqlDb);
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         connection = createConnection();
     }
