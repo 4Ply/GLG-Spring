@@ -1,9 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 # IntelliJ project files
-.idea
+.idea/
 *.iml
-out
+out/
 gen### Java template
 *.class
 
